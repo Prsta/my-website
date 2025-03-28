@@ -5,10 +5,10 @@ let w = (c.width = window.innerWidth),
 (hh = h / 2),
   (opts = {
     // change the text in here //
-    strings: ["HAPPY", "BIRTHDAY!", "ASIYAH", ],
-    charSize: 50,
-    charSpacing: 59,
-    lineHeight: 120,
+    strings: ["HAPPY", "BIRTHDAY!", "KEYSHA", ],
+    charSize: 60,
+    charSpacing: 65,
+    lineHeight: 70,
   
 
 
@@ -58,11 +58,35 @@ let w = (c.width = window.innerWidth),
 
 ctx.font = opts.charSize + "px Verdana";
 
+function anim() {
+  window.requestAnimationFrame(anim);
+
+  ctx.fillStyle = "#111";
+  ctx.fillRect(0, 0, w, h);
+
+  ctx.translate(hw, hh);
+
+  var done = true;
+  for (var l = 0; l < letters.length; ++l) {
+    letters[l].step();
+    if (letters[l].phase !== "done") done = false;
+  }
+
+  ctx.translate(-hw, -hh);
+
+  if (done) {
+    for (var l = 0; l < letters.length; ++l) letters[l].reset();
+  }
+
+  // Tambahkan timeout tanpa mengubah kode lain
+  setTimeout(() => {}, 10000);
+}
+
 function Letter(char, x, y) {
   this.char = char;
   this.x = x;
   this.y = y;
-
+  
   this.dx = -ctx.measureText(char).width / 2;
   this.dy = +opts.charSize / 2;
 
